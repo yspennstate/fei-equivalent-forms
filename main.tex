@@ -1,0 +1,281 @@
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Inf}{\mathrm{Inf}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\E}{\mathbb{E}}
+
+\title{Four equivalent forms of the Fourier entropy-influence conjecture}
+\author{Yitzchak Shmalo}
+\date{}
+
+\begin{document}
+
+\begin{abstract}
+Let $f$ be a Boolean function with spectral distribution $\mu(S)=\hat f(S)^2$, and let $\gamma(T)=\sum_{U\supseteq
+T}\mu(U)$ be the generalized influence of a set $T$. The Fourier entropy splits as $H(f)=A+B$ with
+$A=\E_\mu\log_2(1/\gamma(S))$ and $B=\E_\mu\log_2(\gamma(S)/\mu(S))\ge 0$. Since derivatives of Boolean functions take
+values in a lattice, $A\le H(f)/2+I(f)-\Var(f)$, and so the Fourier entropy-influence conjecture is equivalent to
+$B\le C\,I(f)$. We give three further equivalent forms: a bound on the cross-entropy of the spectral distribution against
+the noisy generalized influences $\|T_{\sqrt t}\,\partial_T f\|_2^2$ at a fixed $t<1$; a bound on the integral over
+$t\in[\tfrac12,1]$ of the expected number of elements a noise-tilted posterior adds to the spectral sample; and a bound
+of $O(1)$ bits on the log-loss of predicting a uniformly chosen element of the size-biased spectral sample from the
+others, which also has a variational form over all predictors. The second gives the unconditional bound
+$H(f)\le 4I(f)-2\Var(f)+2M(f)$, where $M(f)$ is the expected number of such added elements at $t=1$.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Let $f:\{-1,1\}^n\to\{-1,1\}$ have Fourier expansion $f=\sum_S\hat f(S)\chi_S$. By Parseval $\mu(S)=\hat f(S)^2$ is a
+probability distribution on subsets of $[n]$, and we write $U$ for a random set with law $\mu$. Put
+\[
+H(f)=\sum_S\mu(S)\log_2\frac1{\mu(S)},\quad \Inf_i(f)=\sum_{S\ni i}\mu(S),\quad I(f)=\sum_S|S|\mu(S),\quad
+\Var(f)=1-\mu(\emptyset).
+\]
+The Fourier entropy-influence (FEI) conjecture of Friedgut and Kalai~\cite{FK96} asks for a universal $C$ with
+$H(f)\le C\,I(f)$ for all Boolean $f$. It is known for symmetric functions and read-once decision
+trees~\cite{OWZ11}, and the best general bound is Han's~\cite{Han}. In~\cite{Shm1} the conjecture was shown to be
+equivalent to a one-coordinate inequality, and to the bound $\sum_iE_i(f)\le C\,I(f)$ on the erasure entropies
+\[
+E_i(f)=H\bigl(\mathbf 1[i\in U]\bigm| U\setminus\{i\}\bigr).
+\]
+Here we give four more equivalent forms. All of them use the derivatives
+\[
+\partial_T f=\sum_{U\supseteq T}\hat f(U)\chi_{U\setminus T},\qquad
+\gamma_t(T)=\|T_{\sqrt t}\,\partial_T f\|_2^2=\sum_{U\supseteq T}\mu(U)\,t^{|U\setminus T|}\quad(0\le t\le 1),
+\]
+where $T_\rho$ is the noise operator. For $t=1$ we write $\gamma(T)=\gamma_1(T)=\|\partial_Tf\|_2^2$; this is the
+generalized influence $I_T[f]$ of Kelman, Kindler, Lifshitz, Minzer and Safra~\cite{KKLMS}. Note $\gamma_0=\mu$,
+$\gamma(\emptyset)=1$ and $\mu\le\gamma_t\le\gamma\le 1$. Sums over $S$ below run over the support of $\mu$. Put
+\[
+A=\sum_S\mu(S)\log_2\frac1{\gamma(S)},\qquad B=\sum_S\mu(S)\log_2\frac{\gamma(S)}{\mu(S)},\qquad H(f)=A+B,
+\]
+and for $0<t<1$ let $A_t=\sum_S\mu(S)\log_2(1/\gamma_t(S))$. Let
+\[
+m_t(T)=\frac{\sum_{U\supseteq T}|U\setminus T|\,\mu(U)\,t^{|U\setminus T|}}{\gamma_t(T)},\qquad
+M_t(f)=\sum_S\mu(S)\,m_t(S),
+\]
+so that $m_t(T)$ is the mean of $|U\setminus T|$ when $U\supseteq T$ is drawn with probability proportional to
+$\mu(U)t^{|U\setminus T|}$, and write $M(f)=M_1(f)$. Finally let $Q$ be the law on pairs $(T,i)$ with $i\notin T$ given
+by $Q(T,i)=\mu(T\cup\{i\})/I(f)$; it is the law of $(U\setminus\{i\},i)$ when $U$ is drawn size-biased and $i$ is a
+uniform element of $U$. Put
+\[
+L(f)=\E_{(T,i)\sim Q}\log_2\frac{\mu(T)+\mu(T\cup\{i\})}{\mu(T\cup\{i\})},
+\]
+the log-loss in bits of predicting that $i\in U$ from $U\setminus\{i\}$.
+
+\begin{theorem}\label{thm:main}
+For every Boolean function $f$ and every $0<t<1$,
+\begin{enumerate}
+\item[(a)] $H(f)\le 2B+2I(f)-2\Var(f)$ and $0\le B\le H(f)$;
+\item[(b)] $A_t\le H(f)\le A_t+I(f)\log_2\frac1{1-t}$;
+\item[(c)] $B=\frac1{\ln 2}\int_0^1M_s(f)\,\frac{ds}{s}$, the function $s\mapsto m_s(T)$ is nondecreasing for every
+$T$, and
+\[
+H(f)\le 4I(f)-2\Var(f)+\frac{2}{\ln2}\int_{1/2}^1M_s(f)\,\frac{ds}{s}\le 4I(f)-2\Var(f)+2M(f);
+\]
+\item[(d)] $I(f)\,L(f)\le\sum_iE_i(f)\le I(f)\,L(f)+I(f)/\ln 2$.
+\end{enumerate}
+Consequently the following are equivalent: the FEI conjecture; $B\le C\,I(f)$ for all $f$; $A_t\le C\,I(f)$ for all $f$
+(for one, or every, fixed $t\in(0,1)$); $\int_{1/2}^1M_s(f)\,ds\le C\,I(f)$ for all $f$; and $L(f)\le C$ for all $f$.
+\end{theorem}
+
+Each form isolates a different piece of the difficulty. Form (a) says that the part of the entropy carried by the size of
+the generalized influences is harmless, and what must be bounded is the relative entropy of $\mu(S)$ against
+$\gamma(S)$, which compares a coefficient with the total weight above it. Form (b) replaces the exact coefficients by
+their noisy upper sets, at any fixed noise level. Form (c) writes $B$ as the expected number of elements a noise-tilted
+posterior adds to the spectral sample, and shows that only noise levels near $t=1$ matter. Form (d) reduces the
+conjecture to the prediction of a single element of the spectral sample.
+
+The equivalences hold for the class of all Boolean functions, not function by function. For instance, when $\hat f$ is
+supported on sets of odd size, as for the majority function, the parity of $|U\setminus\{i\}|$ determines whether
+$i\in U$, so $E_i(f)=0$ for every $i$ and $L(f)=0$, while $H(f)$ may be large compared with $I(f)$.
+
+\section{The split}\label{sec:split}
+
+\begin{lemma}\label{lem:gran}
+For every $T\ne\emptyset$, $\mu(T)\le 4^{|T|-1}\gamma(T)^2$.
+\end{lemma}
+
+\begin{proof}
+For $x\in\{-1,1\}^n$,
+$\partial_Tf(x)=2^{-|T|}\sum_{y\in\{-1,1\}^T}\bigl(\prod_{j\in T}y_j\bigr)f(y,x_{[n]\setminus T})$, a sum of
+$2^{|T|}$ terms $\pm1$ divided by $2^{|T|}$. The sum is even, so $\partial_Tf$ takes values in $2^{1-|T|}\mathbb Z$ and
+$(\partial_Tf)^2\ge 2^{1-|T|}|\partial_Tf|$ pointwise. Hence
+$\gamma(T)=\E(\partial_Tf)^2\ge 2^{1-|T|}\E|\partial_Tf|\ge 2^{1-|T|}|\hat f(T)|$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(a)]
+Since $\gamma\le1$ and $\gamma\ge\mu$, $A\ge0$ and $B\ge0$, so $B\le H(f)$. By Lemma~\ref{lem:gran}, for $S\ne\emptyset$
+in the support, $\log_2(1/\gamma(S))\le |S|-1+\tfrac12\log_2(1/\mu(S))$, while $S=\emptyset$ contributes $0$ to $A$. So
+\[
+A\le\sum_{S\ne\emptyset}\mu(S)(|S|-1)+\tfrac12H(f)=I(f)-\Var(f)+\tfrac12H(f),
+\]
+and $H(f)=A+B$ gives the claim.
+\end{proof}
+
+The constant in Lemma~\ref{lem:gran} is attained: for a dictator $f=\chi_{\{1\}}$ and $T=\{1\}$ both sides equal $1$.
+
+\section{Noisy upper sets}\label{sec:thin}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(b)]
+Let $\nu_t(T)=(1-t)^{|T|}\gamma_t(T)=\sum_{U\supseteq T}\mu(U)(1-t)^{|T|}t^{|U\setminus T|}$. This is the law of the
+random set obtained from $U$ by keeping each element independently with probability $1-t$, so $\sum_T\nu_t(T)=1$.
+Gibbs' inequality gives
+\[
+H(f)\le\sum_S\mu(S)\log_2\frac1{\nu_t(S)}=A_t+I(f)\log_2\frac1{1-t}.
+\]
+The other bound is $\gamma_t\ge\mu$.
+\end{proof}
+
+At $t=1$ only the lower bound survives: $A\le H(f)$, and indeed $A\le H(f)/2+I(f)$ by part (a). So the bound $A\le
+C\,I(f)$ is a consequence of FEI but is not known to imply it.
+
+\section{The tilted excess}\label{sec:tilt}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(c)]
+Fix $T$ in the support of $\mu$. Then $\frac{d}{ds}\ln\gamma_s(T)=m_s(T)/s$ for $0<s\le1$, and $m_s(T)=O(s)$ as $s\to0$.
+Differentiating once more, $s\frac{d}{ds}m_s(T)$ is the variance of $|U\setminus T|$ under the tilted law in the
+definition of $m_s$, so $m_s(T)$ is nondecreasing. Since $\gamma_0(T)=\mu(T)$,
+\[
+\log_2\frac{\gamma(T)}{\mu(T)}=\frac1{\ln2}\int_0^1m_s(T)\,\frac{ds}{s},\qquad
+\log_2\frac{1}{\gamma_\lambda(T)}=\log_2\frac1{\gamma(T)}+\frac1{\ln2}\int_\lambda^1m_s(T)\,\frac{ds}{s}.
+\]
+Averaging the first identity over $\mu$ (the integrand is nonnegative) gives the formula for $B$. Averaging the second
+gives $A_\lambda=A+\frac1{\ln2}\int_\lambda^1M_s\,ds/s$. Part (b) at $t=\lambda$ and the bound on $A$ from the proof of
+part (a) give
+\[
+H(f)\le\tfrac12H(f)+I(f)-\Var(f)+\frac1{\ln2}\int_\lambda^1M_s(f)\,\frac{ds}{s}+I(f)\log_2\frac1{1-\lambda}.
+\]
+Taking $\lambda=\tfrac12$ gives the first inequality, and $M_s\le M_1$ gives the second.
+\end{proof}
+
+For the equivalence in the theorem, one direction is the inequality just proved, with $ds/s\le 2\,ds$ on $[\tfrac12,1]$.
+For the other, $\int_{1/2}^1M_s\,ds\le\int_0^1M_s\,ds/s=B\ln2\le H(f)\ln 2$.
+
+The quantity $M(f)$ is the expected number of elements that a draw from $\mu$ conditioned to contain $S$ adds to $S$,
+when $S$ is itself drawn from $\mu$. The bound $H(f)\le 4I(f)-2\Var(f)+2M(f)$ holds for every $f$; the bound
+$M(f)\le C\,I(f)$ for all Boolean $f$ would imply the conjecture, and it is open whether it holds.
+
+\section{Predicting one element}\label{sec:pred}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(d)]
+Fix $i$, and for $T\not\ni i$ write $p=\mu(T)$ and $q=\mu(T\cup\{i\})$. The contribution of the pair to $E_i(f)$ is
+\[
+p\log_2\frac{p+q}{p}+q\log_2\frac{p+q}{q}.
+\]
+Summing the second term over $i$ and $T$ gives $I(f)L(f)$. The first term lies in $[0,q/\ln 2]$, and $\sum_i\sum_T
+q=I(f)$.
+\end{proof}
+
+Combined with~\cite[Corollary~5]{Shm1}, which says that FEI with constant $C$ implies $\sum_iE_i\le C\,I(f)$ and that
+$\sum_iE_i\le C\,I(f)$ for all $f$ implies FEI with constant $C+2/\ln2$, part (d) shows that FEI holds if and only if
+$\sup_fL(f)<\infty$; precisely, $L\le C$ for all $f$ gives $H(f)\le(C+3/\ln2)I(f)$.
+
+The loss $L$ has a variational form. For any function $p_i(T)\ge0$ on pairs, put
+\[
+K_p=\frac1{I(f)}\sum_{i}\sum_{T\not\ni i}\bigl(\mu(T)+\mu(T\cup\{i\})\bigr)\,p_i(T).
+\]
+
+\begin{proposition}\label{prop:var}
+For every $p$, $L(f)\le\log_2K_p+\E_Q\log_2\frac1{p_i(T)}$, with equality when
+$p_i(T)=\mu(T\cup\{i\})/(\mu(T)+\mu(T\cup\{i\}))$.
+\end{proposition}
+
+\begin{proof}
+$R(T,i)=(\mu(T)+\mu(T\cup\{i\}))\,p_i(T)/(K_pI(f))$ is a probability law on pairs, and Gibbs' inequality
+$\E_Q\log_2(Q/R)\ge0$ is the claim. At the stated $p$, $R=Q$ and $K_p=1$.
+\end{proof}
+
+So a predictor that guesses ``$i\in U$'' with probability $p_i(T)$, and whose normalized total guess $K_p$ is bounded,
+bounds $L$. The constant predictor $p\equiv\tfrac12$ has $K_p=n/(2I(f))$ and gives $L(f)\le\log_2(n/I(f))$, hence
+$\sum_iE_i(f)\le I(f)\bigl(\log_2(n/I(f))+1/\ln2\bigr)$. A bound uniform in $n$ needs a predictor that uses $T$.
+
+\begin{remark}\label{rem:centre}
+Multiplying $f$ by a character $\chi_R$ moves the spectrum, $\widehat{\chi_Rf}(S)=\hat f(S\triangle R)$. It maps the
+pairs $\{T,T\cup\{i\}\}$ to pairs, so every $E_i$ is unchanged, while $\Inf_i$ becomes $1-\Inf_i$ for $i\in R$. Together
+with Lemma~2.2 of~\cite{Shm2}, where the same move is used for $H$, FEI is equivalent to
+$\sum_iE_i(f)\le C\sum_i\min(\Inf_i(f),1-\Inf_i(f))$, and also to $\sum_iE_i(f)\le C\,(I(f)-W_1(f))$ with
+$W_1(f)=\sum_i\hat f(\{i\})^2$.
+\end{remark}
+
+\section{Checks}\label{sec:ex}
+
+All identities and inequalities of Theorem~\ref{thm:main}, Lemma~\ref{lem:gran}, Proposition~\ref{prop:var} for the
+constant predictor and the invariance in Remark~\ref{rem:centre} were checked with exact Walsh--Hadamard transforms on
+$119$ functions: random functions on $3$ to $9$ variables with biases $\tfrac12$, $0.15$ and $0.03$, the AND of eight
+variables, the tribes functions of widths $2$ and $3$ on eight and nine variables, and majority on nine variables. The
+ratio in Lemma~\ref{lem:gran} has maximum exactly $1$; the identities $H=A+B$ and the invariance of $\sum_iE_i$ hold to
+$2\cdot10^{-15}$ and the integral formula for $B$ to $8\cdot10^{-7}$ with $80$-point Gauss--Legendre quadrature; the
+slack in part (a) is at least $0.022$, in part (b) at least $0.0055$ (at $t=0.25,0.5,0.75,0.9$), and in the bound with
+$M(f)$ at least $0.16$; and $m_s$ is nondecreasing on the quadrature grid for every function. For majority on nine
+variables, $\sum_iE_i=L=0$ while $H/I=2.137$.
+
+\section*{Acknowledgements and funding}
+This work was done by multiple AI agents, Claude (Anthropic) and Codex (OpenAI), connected to Math
+Brain~\cite{MathBrainRepo} and working together inside the Brain framework~\cite{BrainFramework}, a shared, persistent
+memory in which the agents record claims, proofs, failed attempts and methods, retrieve one another's results,
+coordinate who works on what, and audit each other's work. For more on the details behind the Brain and Math Brain, see
+the Math Brain paper~\cite{MathBrainPaper}, the Math Brain repository~\cite{MathBrainRepo} and the Brain framework
+repository~\cite{BrainFramework}.
+
+The research presented in this paper was supported by the European Research Council (ERC) under the European Union's
+Horizon Europe research and innovation programme (grant agreement No.~101041711), by the Simons Foundation as part of
+the Collaboration on the Mathematical and Scientific Foundations of Deep Learning, by Heights Labs, by Convex Nexus
+Capital, by the Israel Science Foundation (grant number 2258/19), and by the Israel Science Foundation (ISF Grant
+4101/25). Computational resources were provided in part by Google Cloud through its education credits program (credit
+530550103).
+
+\section*{Declaration of competing interest}
+The author holds equity in Heights Labs and in Convex Nexus Capital and has a management role at Convex Nexus Capital.
+These entities are included in the funding declaration above.
+
+\section*{Declaration of generative AI and AI-assisted technologies}
+The paper comes out of Math Brain, an ongoing project on the use of AI systems for research mathematics, and its
+results were developed with the Brain~\cite{BrainFramework} and Math Brain~\cite{MathBrainRepo}. In November 2026 a
+Claude Fable agent (Anthropic), connected to the Brain and working alongside Codex agents running OpenAI's GPT-6.1 on
+the same problem, found the split of part (a), the noisy form of part (b), the integral formula of part (c) and the
+predictor form of part (d). Claude Opus 5.5 (Anthropic) searched the literature, rederived each proof, found the bound
+with $M(f)$, wrote the numerical check, prepared the manuscript and audited it. These checks are not peer review. The
+author directed the work and is responsible for the content of the paper and for decisions concerning its
+dissemination.
+
+\section*{Code and data availability}
+Code and outputs: \url{https://github.com/yspennstate/fei-equivalent-forms}.
+
+The paper is part of the Math Brain project, whose public repository is
+\url{https://github.com/yspennstate/math-brain-public}~\cite{MathBrainRepo}.
+
+\begin{thebibliography}{99}
+\bibitem{FK96} E.~Friedgut, G.~Kalai, Every monotone graph property has a sharp threshold, Proc. Amer. Math. Soc.
+124 (1996), 2993--3002.
+\bibitem{Han} X.~Han, A new bound for the Fourier-entropy-influence conjecture, Combinatorica 45 (2025),
+arXiv:2312.08271.
+\bibitem{KKLMS} E.~Kelman, G.~Kindler, N.~Lifshitz, D.~Minzer, M.~Safra, Towards a proof of the
+Fourier-entropy conjecture?, Geom. Funct. Anal. 30 (2020), 1097--1138.
+\bibitem{OWZ11} R.~O'Donnell, J.~Wright, Y.~Zhou, The Fourier entropy-influence conjecture for certain classes of
+Boolean functions, ICALP 2011.
+\bibitem{Shm1} Y.~Shmalo, The one-coordinate step in the Fourier entropy-influence conjecture,
+\url{https://github.com/yspennstate/fourier-entropy-influence-one-coordinate}, 2026.
+\bibitem{Shm2} Y.~Shmalo, Fourier entropy of threshold functions and their compositions, arXiv:2610.16069, 2026.
+\bibitem{MathBrainRepo} Y.~Shmalo, \emph{Math Brain: public snapshot, code and tests}, 2026,
+\url{https://github.com/yspennstate/math-brain-public}.
+\bibitem{MathBrainPaper} Y.~Shmalo, \emph{Math Brain: shared, auditable memory for multi-agent mathematical research},
+October 2026, \url{https://github.com/yspennstate/math-brain-public/tree/main/papers/math-brain-2026-10-24}.
+\bibitem{BrainFramework} Y.~Shmalo, \emph{Brain Framework}, public software repository, 2026,
+\url{https://github.com/yspennstate/brain-framework-public}.
+\end{thebibliography}
+
+\end{document}

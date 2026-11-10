@@ -1,0 +1,16 @@
+AND_8        H=0.240174 I=0.062500 sumE/I=2.1048 gran=1 split=-0.0223 sum=1.39e-16 thin=-0.00554 tilt=1.25e-16 m1=-0.164 mono=True Lbracket=-0.0275 pred=-5.9 transl=0
+tribes 2x4   H=5.543985 I=1.687500 sumE/I=3.0428 gran=1 split=-0.39 sum=4.44e-16 thin=-0.121 tilt=4.44e-16 m1=-2.24 mono=True Lbracket=-0.48 pred=-0.361 transl=1.78e-15
+tribes 3x3   H=5.255148 I=1.722656 sumE/I=2.5474 gran=1 split=-0.36 sum=1.11e-15 thin=-0.144 tilt=6.66e-16 m1=-2.26 mono=True Lbracket=-0.636 pred=-0.911 transl=0
+MAJ_9        H=5.260150 I=2.460938 sumE/I=0.0000 gran=1 split=-3.38 sum=1.33e-15 thin=-0.305 tilt=4.44e-16 m1=-10 mono=True Lbracket=0 pred=-1.87 transl=0
+functions checked: 119
+max over all (should be: gran <= 1, split/thin/m1/Lbracket/pred <= 0, sum/tilt/transl ~ 0, mono True):
+  gran: 1.0
+  split: -0.02227840418112051
+  sum: 1.7763568394002505e-15
+  thin: -0.0055398021000499405
+  tilt: 7.387862086538632e-07
+  m1: -0.16376438146341102
+  mono: True
+  Lbracket: 0.0
+  pred: -0.051035179195056124
+  transl: 1.7763568394002505e-15
