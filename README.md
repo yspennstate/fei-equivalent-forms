@@ -34,6 +34,12 @@ The script needs Python 3 and NumPy. Its saved output is next to it.
   Walsh-Hadamard transforms on 119 functions (random functions on 3 to 9 variables, AND_8, two tribes functions,
   majority on 9 variables).
 
+## Related papers
+
+* [The one-coordinate step in the Fourier entropy-influence conjecture](https://github.com/yspennstate/fourier-entropy-influence-one-coordinate)
+* [Good coordinates in the Fourier entropy-influence conjecture](https://github.com/yspennstate/fei-good-coordinates)
+* [A variance form of Han's bound on the Fourier entropy](https://github.com/yspennstate/fei-variance-han-bound)
+
 ## License
 
 MIT, see [LICENSE](LICENSE).
