@@ -46,8 +46,10 @@ H(f)=\sum_S\mu(S)\log_2\frac1{\mu(S)},\quad \Inf_i(f)=\sum_{S\ni i}\mu(S),\quad 
 \]
 The Fourier entropy-influence (FEI) conjecture of Friedgut and Kalai~\cite{FK96} asks for a universal $C$ with
 $H(f)\le C\,I(f)$ for all Boolean $f$. It is known for symmetric functions and read-once decision
-trees~\cite{OWZ11}, and the best general bound is Han's~\cite{Han}. In~\cite{Shm1} the conjecture was shown to be
-equivalent to a one-coordinate inequality, and to the bound $\sum_iE_i(f)\le C\,I(f)$ on the erasure entropies
+trees~\cite{OWZ11}, it is preserved under suitable compositions~\cite{OT13}, there are bounds in terms of
+decision-tree and communication complexity measures~\cite{CKLS,WWW}, and the best general bound is Han's~\cite{Han}.
+In~\cite{Shm1} the conjecture was shown to be equivalent to a one-coordinate inequality, and to the bound
+$\sum_iE_i(f)\le C\,I(f)$ on the erasure entropies (in the sense of Verd\'u and Weissman~\cite{VW08})
 \[
 E_i(f)=H\bigl(\mathbf 1[i\in U]\bigm| U\setminus\{i\}\bigr).
 \]
@@ -269,17 +271,24 @@ The paper is part of the Math Brain project, whose public repository is
 \begin{thebibliography}{99}
 \bibitem{FK96} E.~Friedgut, G.~Kalai, Every monotone graph property has a sharp threshold, Proc. Amer. Math. Soc.
 124 (1996), 2993--3002.
+\bibitem{CKLS} S.~Chakraborty, R.~Kulkarni, S.~V.~Lokam, N.~Saurabh, Upper bounds on Fourier entropy, Theoret.
+Comput. Sci. 654 (2016), 92--112.
 \bibitem{GMP} M.~J.~Gonz\'alez, P.~MacManus, M.~C.~Pereyra, Further evidence towards the Fourier
 entropy-influence conjecture, arXiv:2606.00246, 2026.
 \bibitem{Han} X.~Han, A new bound for the Fourier-entropy-influence conjecture, Combinatorica 45 (2025),
 arXiv:2312.08271.
 \bibitem{KKLMS} E.~Kelman, G.~Kindler, N.~Lifshitz, D.~Minzer, M.~Safra, Towards a proof of the
 Fourier-entropy conjecture?, Geom. Funct. Anal. 30 (2020), 1097--1138.
+\bibitem{OT13} R.~O'Donnell, L.-Y.~Tan, A composition theorem for the Fourier entropy-influence conjecture, ICALP 2013.
 \bibitem{OWZ11} R.~O'Donnell, J.~Wright, Y.~Zhou, The Fourier entropy-influence conjecture for certain classes of
-Boolean functions, ICALP 2011.
+Boolean functions, ICALP 2011, Lecture Notes in Comput. Sci. 6755, 330--341.
 \bibitem{Shm1} Y.~Shmalo, The one-coordinate step in the Fourier entropy-influence conjecture,
 \url{https://github.com/yspennstate/fourier-entropy-influence-one-coordinate}, 2026.
 \bibitem{Shm2} Y.~Shmalo, Fourier entropy of threshold functions and their compositions, arXiv:2610.16069, 2026.
+\bibitem{VW08} S.~Verd\'u, T.~Weissman, The information lost in erasures, IEEE Trans. Inform. Theory 54 (2008),
+5030--5058.
+\bibitem{WWW} A.~Wan, J.~Wright, C.~Wu, Decision trees, protocols and the entropy-influence conjecture, ITCS 2014,
+arXiv:1312.3003.
 \bibitem{MathBrainRepo} Y.~Shmalo, \emph{Math Brain: public snapshot, code and tests}, 2026,
 \url{https://github.com/yspennstate/math-brain-public}.
 \bibitem{MathBrainPaper} Y.~Shmalo, \emph{Math Brain: shared, auditable memory for multi-agent mathematical research},
