@@ -114,8 +114,8 @@ For every $T\ne\emptyset$, $\mu(T)\le 4^{|T|-1}\gamma(T)^2$.
 \end{lemma}
 
 \begin{proof}
-For $x\in\{-1,1\}^n$,
-$\partial_Tf(x)=2^{-|T|}\sum_{y\in\{-1,1\}^T}\bigl(\prod_{j\in T}y_j\bigr)f(y,x_{[n]\setminus T})$, a sum of
+This is the usual granularity argument for derivatives of Boolean functions~\cite[Chapter~2]{OD14}. For
+$x\in\{-1,1\}^n$, $\partial_Tf(x)=2^{-|T|}\sum_{y\in\{-1,1\}^T}\bigl(\prod_{j\in T}y_j\bigr)f(y,x_{[n]\setminus T})$, a sum of
 $2^{|T|}$ terms $\pm1$ divided by $2^{|T|}$. The sum is even, so $\partial_Tf$ takes values in $2^{1-|T|}\mathbb Z$ and
 $(\partial_Tf)^2\ge 2^{1-|T|}|\partial_Tf|$ pointwise. Hence
 $\gamma(T)=\E(\partial_Tf)^2\ge 2^{1-|T|}\E|\partial_Tf|\ge 2^{1-|T|}|\hat f(T)|$.
@@ -279,6 +279,7 @@ entropy-influence conjecture, arXiv:2606.00246, 2026.
 arXiv:2312.08271.
 \bibitem{KKLMS} E.~Kelman, G.~Kindler, N.~Lifshitz, D.~Minzer, M.~Safra, Towards a proof of the
 Fourier-entropy conjecture?, Geom. Funct. Anal. 30 (2020), 1097--1138.
+\bibitem{OD14} R.~O'Donnell, \emph{Analysis of Boolean Functions}, Cambridge University Press, 2014.
 \bibitem{OT13} R.~O'Donnell, L.-Y.~Tan, A composition theorem for the Fourier entropy-influence conjecture, ICALP 2013.
 \bibitem{OWZ11} R.~O'Donnell, J.~Wright, Y.~Zhou, The Fourier entropy-influence conjecture for certain classes of
 Boolean functions, ICALP 2011, Lecture Notes in Comput. Sci. 6755, 330--341.
