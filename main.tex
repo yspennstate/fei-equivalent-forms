@@ -23,15 +23,13 @@
 
 \begin{abstract}
 Let $f$ be a Boolean function with spectral distribution $\mu(S)=\hat f(S)^2$, and let $\gamma(T)=\sum_{U\supseteq
-T}\mu(U)$ be the generalized influence of a set $T$. The Fourier entropy splits as $H(f)=A+B$ with
-$A=\E_\mu\log_2(1/\gamma(S))$ and $B=\E_\mu\log_2(\gamma(S)/\mu(S))\ge 0$. Since derivatives of Boolean functions take
-values in a lattice, $A\le H(f)/2+I(f)-\Var(f)$, and so the Fourier entropy-influence conjecture is equivalent to
-$B\le C\,I(f)$. We give three further equivalent forms: a bound on the cross-entropy of the spectral distribution against
-the noisy generalized influences $\|T_{\sqrt t}\,\partial_T f\|_2^2$ at a fixed $t<1$; a bound on the integral over
-$t\in[\tfrac12,1]$ of the expected number of elements a noise-tilted posterior adds to the spectral sample; and a bound
-of $O(1)$ bits on the log-loss of predicting a uniformly chosen element of the size-biased spectral sample from the
-others, which also has a variational form over all predictors. Form (c) gives the unconditional bound
-$H(f)\le 4I(f)-2\Var(f)+2M(f)$, where $M(f)$ is the expected number of such added elements at $t=1$.
+T}\mu(U)$ be the generalized influence of a set $T$. The Fourier entropy splits as $H(f)=A+B$, where $A$ is the mean of
+$\log_2(1/\gamma(S))$ and $B\ge0$ the mean of $\log_2(\gamma(S)/\mu(S))$ under $\mu$. Since derivatives of Boolean
+functions take values in a lattice, $A\le H(f)/2+I(f)-\Var(f)$, so the Fourier entropy-influence conjecture is
+equivalent to $B\le C\,I(f)$. We give three further equivalent forms, through noisy generalized influences, a
+noise-tilted posterior on the spectral sample, and the prediction of one element of the spectral sample from the others.
+Every $f$ satisfies $H(f)\le 4I(f)-2\Var(f)+2M(f)$, where $M(f)$ is the expected number of elements that a draw from
+$\mu$ conditioned to contain $S$ adds to $S$, for $S$ drawn from $\mu$.
 \end{abstract}
 
 \subjclass[2020]{06E30, 42C10, 94A17}
