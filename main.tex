@@ -181,12 +181,12 @@ $M(f)\le C\,I(f)$ for all Boolean $f$ would imply the conjecture, and it is open
 \section{Predicting one element}\label{sec:pred}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}(d)]
-Fix $i$, and for $T\not\ni i$ write $p=\mu(T)$ and $q=\mu(T\cup\{i\})$. The contribution of the pair to $E_i(f)$ is
+Fix $i$, and for $T\not\ni i$ write $a=\mu(T)$ and $b=\mu(T\cup\{i\})$. The contribution of the pair to $E_i(f)$ is
 \[
-p\log_2\frac{p+q}{p}+q\log_2\frac{p+q}{q}.
+a\log_2\frac{a+b}{a}+b\log_2\frac{a+b}{b}.
 \]
-Summing the second term over $i$ and $T$ gives $I(f)L(f)$. The first term lies in $[0,q/\ln 2]$, and $\sum_i\sum_T
-q=I(f)$.
+Summing the second term over $i$ and $T$ gives $I(f)L(f)$. The first term lies in $[0,b/\ln 2]$, and $\sum_i\sum_T
+b=I(f)$.
 \end{proof}
 
 Combined with~\cite[Corollary~5]{Shm1}, which says that FEI with constant $C$ implies $\sum_iE_i\le C\,I(f)$ and that
@@ -213,9 +213,9 @@ bounds $L$. The constant predictor $p\equiv\tfrac12$ has $K_p=n/(2I(f))$ and giv
 $\sum_iE_i(f)\le I(f)\bigl(\log_2(n/I(f))+1/\ln2\bigr)$. A bound uniform in $n$ needs a predictor that uses $T$.
 
 \begin{remark}\label{rem:centre}
-Multiplying $f$ by a character $\chi_R$ moves the spectrum, $\widehat{\chi_Rf}(S)=\hat f(S\triangle R)$, where $S\triangle R$ is the symmetric difference of $S$ and $R$. It maps the
-pairs $\{T,T\cup\{i\}\}$ to pairs, so every $E_i$ is unchanged, while $\Inf_i$ becomes $1-\Inf_i$ for $i\in R$. Choosing
-$R=\{i:\Inf_i(f)>\tfrac12\}$ shows that the bound $\sum_iE_i(f)\le C\,I(f)$ for all $f$ is equivalent to
+Multiplying $f$ by a character $\chi_Y$ moves the spectrum, $\widehat{\chi_Yf}(S)=\hat f(S\triangle Y)$, where $S\triangle Y$ is the symmetric difference of $S$ and $Y$. It maps the
+pairs $\{T,T\cup\{i\}\}$ to pairs, so every $E_i$ is unchanged, while $\Inf_i$ becomes $1-\Inf_i$ for $i\in Y$. Choosing
+$Y=\{i:\Inf_i(f)>\tfrac12\}$ shows that the bound $\sum_iE_i(f)\le C\,I(f)$ for all $f$ is equivalent to
 $\sum_iE_i(f)\le C\sum_i\min(\Inf_i(f),1-\Inf_i(f))$ for all $f$; with~\cite[Corollary~5]{Shm1}, so is FEI. (For $H$
 itself the same move is Lemma~2.2 of~\cite{Shm2}.) Since $D_if$ takes values in $\{-1,0,1\}$, $\Inf_i(f)=\Pr[D_if\ne0]$
 and $\hat f(\{i\})=\mathbf E\,D_if$, so $\hat f(\{i\})^2\le\Inf_i(f)^2$ and
@@ -274,8 +274,7 @@ The paper is part of the Math Brain project, whose public repository is
 \section{Notation}\label{app:notation}
 
 Symbols are listed in the order in which they first appear, and the last column gives that place. The letter $T$
-denotes a set and $T_\rho$ the noise operator. The letters $p$ and $R$ are reused; for these the last column gives the
-place where each meaning first appears.
+denotes a set and $T_\rho$ the noise operator.
 
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}>{\raggedright\arraybackslash}p{0.54\textwidth}>{\raggedright\arraybackslash}p{0.2\textwidth}@{}}
 \toprule
@@ -306,10 +305,11 @@ $L(f)$ & the log-loss $\E_Q\log_2\bigl((\mu(T)+\mu(T\cup\{i\}))/\mu(T\cup\{i\})\
 $\nu_t(T)$ & $(1-t)^{|T|}\gamma_t(T)$, the law of the set that keeps each element of $U$ with probability $1-t$ & Section~\ref{sec:thin} \\
 $s$ & the integration variable in part (c) & Theorem~\ref{thm:main} \\
 $\lambda$ & the noise level at which part (b) is applied in the proof of part (c) & Section~\ref{sec:tilt} \\
-$p$, $q$ & $\mu(T)$ and $\mu(T\cup\{i\})$ for a fixed $i$ and $T\not\ni i$, in the proof of part (d) & Section~\ref{sec:pred} \\
+$a$, $b$ & $\mu(T)$ and $\mu(T\cup\{i\})$ for a fixed $i$ and $T\not\ni i$, in the proof of part (d) & Section~\ref{sec:pred} \\
 $p_i(T)$, $K_p$ & a predictor, a nonnegative function on pairs, and its normalized total $\frac1{I(f)}\sum_i\sum_{T\not\ni i}(\mu(T)+\mu(T\cup\{i\}))\,p_i(T)$ & Section~\ref{sec:pred} \\
-$R(T,i)$, $R$ & the probability law $(\mu(T)+\mu(T\cup\{i\}))\,p_i(T)/(K_pI(f))$ on pairs, in the proof of Proposition~\ref{prop:var}; in Remark~\ref{rem:centre}, a set, with $\chi_Rf$ the shifted function, and then $\{i:\Inf_i(f)>\tfrac12\}$ & Proposition~\ref{prop:var}; Remark~\ref{rem:centre} \\
-$S\triangle R$ & the symmetric difference $(S\setminus R)\cup(R\setminus S)$ & Remark~\ref{rem:centre} \\
+$R(T,i)$ & the probability law $(\mu(T)+\mu(T\cup\{i\}))\,p_i(T)/(K_pI(f))$ on pairs, in the proof & Proposition~\ref{prop:var} \\
+$Y$, $\chi_Yf$ & a set of coordinates, and the shifted function; then $\{i:\Inf_i(f)>\tfrac12\}$ & Remark~\ref{rem:centre} \\
+$S\triangle Y$ & the symmetric difference $(S\setminus Y)\cup(Y\setminus S)$ & Remark~\ref{rem:centre} \\
 $D_if$ & $\tfrac12(f_{i\to1}-f_{i\to-1})$, with values in $\{-1,0,1\}$ & Remark~\ref{rem:centre} \\
 $W_1(f)$ & the level-one weight $\sum_i\hat f(\{i\})^2$ & Remark~\ref{rem:centre} \\
 \bottomrule
