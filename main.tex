@@ -47,7 +47,9 @@ H(f)=\sum_S\mu(S)\log_2\frac1{\mu(S)},\quad \Inf_i(f)=\sum_{S\ni i}\mu(S),\quad 
 The Fourier entropy-influence (FEI) conjecture of Friedgut and Kalai~\cite{FK96} asks for a universal $C$ with
 $H(f)\le C\,I(f)$ for all Boolean $f$. It is known for symmetric functions and read-once decision
 trees~\cite{OWZ11}, it is preserved under suitable compositions~\cite{OT13}, there are bounds in terms of
-decision-tree and communication complexity measures~\cite{CKLS,WWW}, and the best general bound is Han's~\cite{Han}.
+decision-tree and communication complexity measures~\cite{CKLS,WWW}, and it holds for linear threshold
+functions~\cite{Shm2}. For every Boolean $f$, Han~\cite{Han} proved $H(f)\le(2+3/\ln 2)\,I(f)+\sum_i\Inf_i(f)\log_2(1/\Inf_i(f))$,
+and Li and Han~\cite{LH25} lowered the constant in front of $I(f)$ to the sharp value $1/\ln 2$.
 In~\cite{Shm1} the conjecture was shown to be equivalent to a one-coordinate inequality, and to the bound
 $\sum_iE_i(f)\le C\,I(f)$ on the erasure entropies (in the sense of Verd\'u and Weissman~\cite{VW08})
 \[
@@ -279,6 +281,8 @@ entropy-influence conjecture, arXiv:2606.00246, 2026.
 Art.~4, doi:10.1007/s00493-024-00133-z; arXiv:2312.08271.
 \bibitem{KKLMS} E.~Kelman, G.~Kindler, N.~Lifshitz, D.~Minzer, M.~Safra, Towards a proof of the
 Fourier-entropy conjecture?, Geom. Funct. Anal. 30 (2020), 1097--1138.
+\bibitem{LH25} P.~Li, G.~Han, Strengthening Han's Fourier entropy-influence inequality via an
+information-theoretic proof, arXiv:2512.03117, 2025.
 \bibitem{OD14} R.~O'Donnell, \emph{Analysis of Boolean Functions}, Cambridge University Press, 2014.
 \bibitem{OT13} R.~O'Donnell, L.-Y.~Tan, A composition theorem for the Fourier entropy-influence conjecture, ICALP 2013,
 Lecture Notes in Comput. Sci. 7965, 780--791, doi:10.1007/978-3-642-39206-1\_66.
