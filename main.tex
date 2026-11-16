@@ -22,14 +22,14 @@
 \begin{document}
 
 \begin{abstract}
-Let $f$ be a Boolean function with spectral distribution $\mu(S)=\hat f(S)^2$, and let $\gamma(T)=\sum_{U\supseteq
-T}\mu(U)$ be the generalized influence of a set $T$. The Fourier entropy splits as $H(f)=A+B$, where $A$ is the mean of
+For a Boolean function $f$ with spectral distribution $\mu(S)=\hat f(S)^2$, let $\gamma(T)=\sum_{U\supseteq
+T}\mu(U)$, the generalized influence of $T$. The Fourier entropy splits as $H(f)=A+B$, where $A$ is the mean of
 $\log_2(1/\gamma(S))$ and $B\ge0$ the mean of $\log_2(\gamma(S)/\mu(S))$ under $\mu$. Since derivatives of Boolean
-functions take values in a lattice, $A\le H(f)/2+I(f)-\Var(f)$, so the Fourier entropy-influence conjecture is
-equivalent to $B\le C\,I(f)$. We give three further equivalent forms, through noisy generalized influences, a
-noise-tilted posterior on the spectral sample, and the prediction of one element of the spectral sample from the others.
-Every $f$ satisfies $H(f)\le 4I(f)-2\Var(f)+2M(f)$, where $M(f)$ is the expected number of elements that a draw from
-$\mu$ conditioned to contain $S$ adds to $S$, for $S$ drawn from $\mu$.
+functions take values in a lattice, $A\le H(f)/2+I(f)-\Var(f)$. So $H(f)\le 2B+2I(f)-2\Var(f)$ for every $f$, and
+the Fourier entropy-influence conjecture is equivalent to $B\le C\,I(f)$. Two more two-sided bounds use noisy
+generalized influences and an integral formula for $B$. They give $H(f)\le 4I(f)-2\Var(f)+2M(f)$, where $M(f)$ is
+the mean number of elements that a draw from $\mu$ conditioned to contain $S$ adds to $S$, for $S$ drawn from $\mu$.
+The sum of the erasure entropies is $I(f)$ times a log-loss of prediction, up to $I(f)/\ln 2$.
 \end{abstract}
 
 \subjclass[2020]{06E30, 42C10, 94A17}
@@ -40,17 +40,20 @@ $\mu$ conditioned to contain $S$ adds to $S$, for $S$ drawn from $\mu$.
 \section{Introduction}\label{sec:intro}
 
 Let $f:\{-1,1\}^n\to\{-1,1\}$ have Fourier expansion $f=\sum_S\hat f(S)\chi_S$. By Parseval $\mu(S)=\hat f(S)^2$ is a
-probability distribution on subsets of $[n]$, and we write $U$ for a random set with law $\mu$. Put
+probability distribution on subsets of $[n]$, and we write $U$ for a random set with law $\mu$, the spectral sample. Put
 \[
 H(f)=\sum_S\mu(S)\log_2\frac1{\mu(S)},\quad \Inf_i(f)=\sum_{S\ni i}\mu(S),\quad I(f)=\sum_S|S|\mu(S),\quad
 \Var(f)=1-\mu(\emptyset).
 \]
 The Fourier entropy-influence (FEI) conjecture of Friedgut and Kalai~\cite{FK96} asks for a universal $C$ with
 $H(f)\le C\,I(f)$ for all Boolean $f$. It is known for symmetric functions and read-once decision
-trees~\cite{OWZ11} and is preserved under suitable compositions~\cite{OT13}. There are bounds in terms of
-decision-tree and communication complexity measures~\cite{CKLS,WWW}, and it holds for linear threshold
-functions~\cite{Shm2}. For every Boolean $f$, Han~\cite{Han} proved $H(f)\le(2+3/\ln 2)\,I(f)+\sum_i\Inf_i(f)\log_2(1/\Inf_i(f))$,
-and the earlier bound of Keller, Mossel and Schlank~\cite[Claim~4.1]{KMS}, by the sum of the binary entropies of the influences, gives this with $1/\ln 2$ in place of $2+3/\ln 2$.
+trees~\cite{OWZ11}, for read-once formulas~\cite{OT13,CKLS} and for functions of bounded average decision-tree
+depth~\cite{WWW}. It has also been proved for linear threshold functions~\cite{Shm2} and for plateaued functions~\cite{Pot26}. For every
+Boolean $f$, Keller, Mossel and Schlank~\cite[Claim~4.1]{KMS} bound $H(f)$ by the sum of the binary entropies of the
+influences, which is at most $I(f)/\ln 2+\sum_i\Inf_i(f)\log_2(1/\Inf_i(f))$, and Han~\cite{Han} proved
+$H(f)\le(2+3/\ln 2)\,I(f)+\sum_i\Inf_i(f)\log_2(1/\Inf_i(f))$ by a different route. In both the last term can exceed
+$I(f)$ by a factor of order $\log n$, for instance when all influences are equal; the bounds below have no such
+term.
 In~\cite{Shm1} the conjecture was shown to be equivalent to a one-coordinate inequality, and to the bound
 $\sum_iE_i(f)\le C\,I(f)$ on the erasure entropies (in the sense of Verd\'u and Weissman~\cite{VW08})
 \[
@@ -58,59 +61,79 @@ E_i(f)=H\bigl(\mathbf 1[i\in U]\bigm| U\setminus\{i\}\bigr).
 \]
 The one-coordinate route goes back to Han~\cite[Remarks~3.1--3.2]{Han}, and the splitting of the entropy drop at one
 coordinate into $E_i$ and a Jensen--Shannon term is equation~(32) of Gonz\'alez, MacManus and Pereyra~\cite{GMP}.
-Here we give four more equivalent forms. All of them use the derivatives
+In~\cite[Corollary~5]{Shm1} the conjecture is shown to be equivalent to $\sum_iE_i(f)\le C\,I(f)$ for all Boolean
+$f$, and this is read there as the prediction of each element of $U$ from the others. For a single function,
+$\sum_iE_i(f)$ gives no upper bound on $H(f)$: when $\hat f$ is supported on sets of odd size, as for the majority
+function, the parity of $|U\setminus\{i\}|$ determines whether $i\in U$, so $E_i(f)=0$ for every $i$, while for
+majority on nine variables $H(f)/I(f)=2.137$. The forms given here bound $H(f)$ above and below by quantities of the
+same function. For $T\subseteq[n]$ let
 \[
-\partial_T f=\sum_{U\supseteq T}\hat f(U)\chi_{U\setminus T},\qquad
-\gamma_t(T)=\|T_{\sqrt t}\,\partial_T f\|_2^2=\sum_{U\supseteq T}\mu(U)\,t^{|U\setminus T|}\quad(0\le t\le 1),
+\partial_T f=\sum_{U\supseteq T}\hat f(U)\chi_{U\setminus T},\qquad \gamma(T)=\|\partial_Tf\|_2^2=\sum_{U\supseteq T}\mu(U),
 \]
-where $T_\rho$ is the noise operator. For $t=1$ we write $\gamma(T)=\gamma_1(T)=\|\partial_Tf\|_2^2$; this is the
-generalized influence $I_T[f]$ of Kelman, Kindler, Lifshitz, Minzer and Safra~\cite{KKLMS}. Note $\gamma_0=\mu$,
-$\gamma(\emptyset)=1$ and $\mu\le\gamma_t\le\gamma\le 1$. Sums over $S$ below run over the support of $\mu$. Put
+so that $\gamma(T)$ is the generalized influence $I_T[f]$ of Kelman, Kindler, Lifshitz, Minzer and
+Safra~\cite{KKLMS}. They used generalized influences, with random restrictions, to show that the Fourier spectrum of
+a Boolean function of constant variance is concentrated on $2^{O(I(f)\log I(f))}$ characters, a weaker form of the
+conjecture. Here only one property of $\gamma$ is used: since $\partial_Tf$ takes values in $2^{1-|T|}\mathbb Z$,
+\[
+\mu(T)\le 4^{|T|-1}\gamma(T)^2\qquad(T\ne\emptyset).
+\]
+Put
 \[
 A=\sum_S\mu(S)\log_2\frac1{\gamma(S)},\qquad B=\sum_S\mu(S)\log_2\frac{\gamma(S)}{\mu(S)},\qquad H(f)=A+B,
 \]
-and for $0<t<1$ let $A_t=\sum_S\mu(S)\log_2(1/\gamma_t(S))$. Let
+where sums over $S$ run over the support of $\mu$. The bound on $\mu(T)$ gives $A\le\frac12H(f)+I(f)-\Var(f)$, and
+hence, for every Boolean $f$,
+\[
+B\le H(f)\le 2B+2I(f)-2\Var(f).
+\]
+So the conjecture is equivalent to $B\le C\,I(f)$ for all $f$, where $B$ compares each coefficient $\mu(S)$ with the
+total weight $\gamma(S)$ above it. Theorem~\ref{thm:main} gives two more two-sided bounds of this kind, one with the
+noise operator applied to each $\partial_Tf$ and one through an integral formula for $B$. It also bounds
+$\sum_iE_i(f)$ above and below, within $I(f)/\ln2$, by $I(f)$ times the log-loss $L(f)$ of predicting whether $i\in U$
+from $U\setminus\{i\}$. With~\cite[Corollary~5]{Shm1}, the conjecture holds if and only if $L(f)$ is bounded over all
+nonconstant $f$, and Proposition~\ref{prop:var} gives $L$ a variational form.
+
+For $0\le t\le1$ let
+\[
+\gamma_t(T)=\|T_{\sqrt t}\,\partial_T f\|_2^2=\sum_{U\supseteq T}\mu(U)\,t^{|U\setminus T|},
+\]
+where $T_\rho$ is the noise operator, the noisy generalized influence of $T$. Then $\gamma_1=\gamma$, $\gamma_0=\mu$,
+$\gamma(\emptyset)=1$ and $\mu\le\gamma_t\le\gamma\le 1$. For $0<t<1$ let $A_t=\sum_S\mu(S)\log_2(1/\gamma_t(S))$, and
+let
 \[
 m_t(T)=\frac{\sum_{U\supseteq T}|U\setminus T|\,\mu(U)\,t^{|U\setminus T|}}{\gamma_t(T)},\qquad
 M_t(f)=\sum_S\mu(S)\,m_t(S),
 \]
 so that $m_t(T)$ is the mean of $|U\setminus T|$ when $U\supseteq T$ is drawn with probability proportional to
-$\mu(U)t^{|U\setminus T|}$, and write $M(f)=M_1(f)$. Finally let $Q$ be the law on pairs $(T,i)$ with $i\notin T$ given
-by $Q(T,i)=\mu(T\cup\{i\})/I(f)$; it is the law of $(U\setminus\{i\},i)$ when $U$ is drawn size-biased and $i$ is a
-uniform element of $U$. Put
+$\mu(U)t^{|U\setminus T|}$. This is the conditional law of $U$ given that the set obtained from $U$ by keeping each
+element independently with probability $1-t$ equals $T$. Write $M(f)=M_1(f)$. For nonconstant $f$ let $Q$ be the law
+on pairs $(T,i)$ with $i\notin T$ given by $Q(T,i)=\mu(T\cup\{i\})/I(f)$; it is the law of $(U\setminus\{i\},i)$ when
+$U$ is drawn with probability proportional to $|U|\mu(U)$ and $i$ is a uniform element of $U$. Put
 \[
-L(f)=\E_{(T,i)\sim Q}\log_2\frac{\mu(T)+\mu(T\cup\{i\})}{\mu(T\cup\{i\})},
+L(f)=\E_{(T,i)\sim Q}\log_2\frac{\mu(T)+\mu(T\cup\{i\})}{\mu(T\cup\{i\})}.
 \]
-the log-loss in bits of predicting that $i\in U$ from $U\setminus\{i\}$.
 
 \begin{theorem}\label{thm:main}
-For every Boolean function $f$ and every $0<t<1$,
+For every nonconstant Boolean function $f$ and every $0<t<1$,
 \begin{enumerate}
 \item[(a)] $H(f)\le 2B+2I(f)-2\Var(f)$ and $0\le B\le H(f)$;
 \item[(b)] $A_t\le H(f)\le A_t+I(f)\log_2\frac1{1-t}$;
 \item[(c)] $B=\frac1{\ln 2}\int_0^1M_s(f)\,\frac{ds}{s}$, the function $s\mapsto m_s(T)$ is nondecreasing for every
-$T$, and
+$T$ in the support of $\mu$, and
 \[
 H(f)\le 4I(f)-2\Var(f)+\frac{2}{\ln2}\int_{1/2}^1M_s(f)\,\frac{ds}{s}\le 4I(f)-2\Var(f)+2M(f);
 \]
 \item[(d)] $I(f)\,L(f)\le\sum_iE_i(f)\le I(f)\,L(f)+I(f)/\ln 2$.
 \end{enumerate}
-Consequently, with~\cite[Corollary~5]{Shm1} for the last item, the following are equivalent: the FEI conjecture; $B\le C\,I(f)$ for all $f$; $A_t\le C\,I(f)$ for all $f$
-(for one, or every, fixed $t\in(0,1)$); $\int_{1/2}^1M_s(f)\,ds\le C\,I(f)$ for all $f$; and $L(f)\le C$ for all $f$.
+Consequently, with~\cite[Corollary~5]{Shm1} for the last item, the following statements are equivalent, each
+asserting that there is a constant $C$ such that the inequality holds for every nonconstant Boolean $f$: the FEI
+conjecture $H(f)\le C\,I(f)$; $B\le C\,I(f)$; $A_t\le C\,I(f)$ (for one, or every, fixed $t\in(0,1)$);
+$\int_{1/2}^1M_s(f)\,ds\le C\,I(f)$; and $L(f)\le C$.
 \end{theorem}
 
-Each form isolates a different piece of the difficulty. Form (a) says that the part of the entropy carried by the size of
-the generalized influences is harmless, and what must be bounded is the relative entropy of $\mu(S)$ against
-$\gamma(S)$, which compares a coefficient with the total weight above it. Form (b) replaces the exact coefficients by
-their noisy upper sets, at any fixed noise level. Form (c) writes $B$ as the expected number of elements a noise-tilted
-posterior adds to the spectral sample, and shows that only noise levels near $t=1$ matter. Form (d) reduces the
-conjecture to the prediction of a single element of the spectral sample.
+The constants change from one statement to the next; the proofs below give them.
 
-The equivalences hold for the class of all Boolean functions, not function by function. For instance, when $\hat f$ is
-supported on sets of odd size, as for the majority function, the parity of $|U\setminus\{i\}|$ determines whether
-$i\in U$, so $E_i(f)=0$ for every $i$ and $L(f)=0$, while $H(f)$ may be large compared with $I(f)$.
-
-\section{The split}\label{sec:split}
+\section{Coefficients against generalized influences}\label{sec:split}
 
 \begin{lemma}\label{lem:gran}
 For every $T\ne\emptyset$, $\mu(T)\le 4^{|T|-1}\gamma(T)^2$.
@@ -135,7 +158,7 @@ and $H(f)=A+B$ gives the claim.
 
 The constant in Lemma~\ref{lem:gran} is attained: for a dictator $f=\chi_{\{1\}}$ and $T=\{1\}$ both sides equal $1$.
 
-\section{Noisy upper sets}\label{sec:thin}
+\section{Noisy generalized influences}\label{sec:thin}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}(b)]
 Let $\nu_t(T)=(1-t)^{|T|}\gamma_t(T)=\sum_{U\supseteq T}\mu(U)(1-t)^{|T|}t^{|U\setminus T|}$. This is the law of the
@@ -147,10 +170,9 @@ H(f)\le\sum_S\mu(S)\log_2\frac1{\nu_t(S)}=A_t+I(f)\log_2\frac1{1-t}.
 The other bound is $\gamma_t\ge\mu$.
 \end{proof}
 
-At $t=1$ only the lower bound survives: $A\le H(f)$, and indeed $A\le H(f)/2+I(f)-\Var(f)$ by part (a). So the bound $A\le
-C\,I(f)$ is a consequence of FEI but is not known to imply it.
+At $t=1$ the upper bound of part (b) is lost, and part (a) takes its place.
 
-\section{The tilted excess}\label{sec:tilt}
+\section{An integral formula for \texorpdfstring{$B$}{B}}\label{sec:tilt}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}(c)]
 Fix $T$ in the support of $\mu$. Then $\frac{d}{ds}\ln\gamma_s(T)=m_s(T)/s$ for $0<s\le1$, and $m_s(T)=O(s)$ as $s\to0$.
@@ -208,15 +230,15 @@ $\E_Q\log_2(Q/R)\ge0$ is the claim. At the stated $p$, $R=Q$ and $K_p=1$.
 
 So a predictor that guesses ``$i\in U$'' with probability $p_i(T)$, and whose normalized total guess $K_p$ is bounded,
 bounds $L$. The constant predictor $p\equiv\tfrac12$ has $K_p=n/(2I(f))$ and gives $L(f)\le\log_2(n/I(f))$, hence
-$\sum_iE_i(f)\le I(f)\bigl(\log_2(n/I(f))+1/\ln2\bigr)$. A bound uniform in $n$ needs a predictor that uses $T$.
+$\sum_iE_i(f)\le I(f)\bigl(\log_2(n/I(f))+1/\ln2\bigr)$.
 
 \begin{remark}\label{rem:centre}
 Multiplying $f$ by a character $\chi_Y$ moves the spectrum, $\widehat{\chi_Yf}(S)=\hat f(S\triangle Y)$, where $S\triangle Y$ is the symmetric difference of $S$ and $Y$. It maps the
 pairs $\{T,T\cup\{i\}\}$ to pairs, so every $E_i$ is unchanged, while $\Inf_i$ becomes $1-\Inf_i$ for $i\in Y$. Choosing
 $Y=\{i:\Inf_i(f)>\tfrac12\}$ shows that the bound $\sum_iE_i(f)\le C\,I(f)$ for all $f$ is equivalent to
 $\sum_iE_i(f)\le C\sum_i\min(\Inf_i(f),1-\Inf_i(f))$ for all $f$; with~\cite[Corollary~5]{Shm1}, so is FEI. (For $H$
-itself the same move is Lemma~2.2 of~\cite{Shm2}.) Since $D_if$ takes values in $\{-1,0,1\}$, $\Inf_i(f)=\Pr[D_if\ne0]$
-and $\hat f(\{i\})=\mathbf E\,D_if$, so $\hat f(\{i\})^2\le\Inf_i(f)^2$ and
+itself the same move is Lemma~2.2 of~\cite{Shm2}.) Since $\partial_{\{i\}}f(x)=\frac12\bigl(f(x^{i\to1})-f(x^{i\to-1})\bigr)$ takes values in $\{-1,0,1\}$,
+$\Inf_i(f)=\Pr[\partial_{\{i\}}f\ne0]$ and $\hat f(\{i\})=\E\,\partial_{\{i\}}f$, so $\hat f(\{i\})^2\le\Inf_i(f)^2$ and
 with $W_1(f)=\sum_i\hat f(\{i\})^2$,
 \[
 I(f)-W_1(f)\ge\sum_i\Inf_i(f)\bigl(1-\Inf_i(f)\bigr)\ge\tfrac12\sum_i\min\bigl(\Inf_i(f),1-\Inf_i(f)\bigr).
@@ -224,19 +246,7 @@ I(f)-W_1(f)\ge\sum_i\Inf_i(f)\bigl(1-\Inf_i(f)\bigr)\ge\tfrac12\sum_i\min\bigl(\
 Hence FEI is also equivalent to $\sum_iE_i(f)\le C\,(I(f)-W_1(f))$ for all $f$, with $C$ changed by a factor at most $2$.
 \end{remark}
 
-\section{Checks}\label{sec:ex}
-
-All identities and inequalities of Theorem~\ref{thm:main}, Lemma~\ref{lem:gran}, Proposition~\ref{prop:var} for the
-constant predictor and the invariance in Remark~\ref{rem:centre} were checked with exact Walsh--Hadamard transforms on
-$119$ functions: random functions on $3$ to $9$ variables with biases $\tfrac12$, $0.15$ and $0.03$, the AND of eight
-variables, the tribes functions of widths $2$ and $3$ on eight and nine variables, and majority on nine variables. The
-ratio in Lemma~\ref{lem:gran} has maximum exactly $1$; the identities $H=A+B$ and the invariance of $\sum_iE_i$ hold to
-$2\cdot10^{-15}$ and the integral formula for $B$ to $8\cdot10^{-7}$ with $80$-point Gauss--Legendre quadrature; the
-inequalities of parts (a) and (b) (at $t=0.25,0.5,0.75,0.9$) and the bound with $M(f)$ hold on all of these functions,
-with smallest slack $0.022$, $0.0055$ and $0.16$ respectively (a character has slack $0$ in (a) and (b)); and $m_s$ is nondecreasing on the quadrature grid for every function. For majority on nine
-variables, $\sum_iE_i=L=0$ while $H/I=2.137$.
-
-\section*{Acknowledgements and funding}
+\section*{Acknowledgements}
 This work was done by multiple AI agents, Claude (Anthropic) and Codex (OpenAI), connected to Math
 Brain~\cite{MathBrainRepo} and working together inside the Brain framework~\cite{BrainFramework}, a shared, persistent
 memory in which the agents record claims, proofs, failed attempts and methods, retrieve one another's results,
@@ -244,6 +254,7 @@ coordinate who works on what, and audit each other's work. For more on the detai
 the Math Brain paper~\cite{MathBrainPaper}, the Math Brain repository~\cite{MathBrainRepo} and the Brain framework
 repository~\cite{BrainFramework}.
 
+\section*{Funding}
 The research presented in this paper was supported by the European Research Council (ERC) under the European Union's
 Horizon Europe research and innovation programme (grant agreement No.~101041711), by the Simons Foundation as part of
 the Collaboration on the Mathematical and Scientific Foundations of Deep Learning, by Heights Labs, by Convex Nexus
@@ -253,20 +264,25 @@ Capital, by the Israel Science Foundation (grant number 2258/19), and by the Isr
 
 \section*{Declaration of competing interest}
 The author holds equity in Heights Labs and in Convex Nexus Capital and has a management role at Convex Nexus Capital.
-These entities are included in the funding declaration above.
+These entities are included in the funding statement above.
 
 \section*{Declaration of generative AI and AI-assisted technologies}
-The paper comes out of Math Brain, a project on the use of AI systems in research mathematics~\cite{BrainFramework,MathBrainRepo}. In November 2026 a
-Claude Fable agent (Anthropic), connected to the Brain and working alongside Codex agents running OpenAI's GPT-6.1 on
-the same problem, found the split of part (a), the noisy form of part (b), the integral formula of part (c) and the
-predictor form of part (d). Claude Opus 5.5 (Anthropic) searched the literature, rederived each proof, found the bound
-with $M(f)$, wrote the numerical check, prepared the manuscript and audited it. The author directed the work and is responsible for the content of the paper.
+The paper comes out of Math Brain, a project on the use of AI systems in research
+mathematics~\cite{BrainFramework,MathBrainRepo}. It builds on the work of others. The conjecture is due to Friedgut
+and Kalai~\cite{FK96}. The generalized influences are those of Kelman, Kindler, Lifshitz, Minzer and
+Safra~\cite{KKLMS}, and the granularity of derivatives is standard~\cite{OD14}. The erasure entropy is that of Verd\'u
+and Weissman~\cite{VW08}. The one-coordinate route is Han's~\cite{Han}, and the decomposition of the entropy drop at
+one coordinate is that of Gonz\'alez, MacManus and Pereyra~\cite{GMP}. The bounds through the entropies of the
+influences are those of Keller, Mossel and Schlank~\cite{KMS} and of Han~\cite{Han}. These results are theirs. In
+November 2026 a Claude Fable agent (Anthropic), connected to the Brain and working alongside Codex agents running
+OpenAI's GPT-6.1 on the same problem, found the two-sided bound of part (a), the noisy form of part (b), the integral
+formula of part (c) and the predictor form of part (d). Claude Opus 5.5 (Anthropic) searched the literature,
+rederived each proof, found the bound with $M(f)$, wrote the numerical check, prepared the manuscript and audited it.
+The author directed the work, read the proofs, and is responsible for the content of the paper.
 
 \section*{Code and data availability}
-Code and outputs: \url{https://github.com/yspennstate/fei-equivalent-forms}, archived on Zenodo with doi:10.5281/zenodo.24125392.
-
-The paper is part of the Math Brain project, whose public repository is
-\url{https://github.com/yspennstate/math-brain-public}~\cite{MathBrainRepo}.
+Code and outputs: \url{https://github.com/yspennstate/fei-equivalent-forms}, archived on Zenodo with doi:10.5281/zenodo.24125392. The script there evaluates every quantity in
+Theorem~\ref{thm:main} by exact Walsh--Hadamard transforms on functions of up to nine variables.
 
 \appendix
 \section{Notation}\label{app:notation}
@@ -292,23 +308,22 @@ $E_i(f)$ & the erasure entropy $H(\mathbf 1[i\in U]\mid U\setminus\{i\})$ & Sect
 $\partial_Tf$ & the derivative $\sum_{U\supseteq T}\hat f(U)\chi_{U\setminus T}$ & Section~\ref{sec:intro} \\
 $T_\rho$ & the noise operator, $T_\rho\chi_S=\rho^{|S|}\chi_S$ & Section~\ref{sec:intro} \\
 $t$ & a noise parameter in $[0,1]$ & Section~\ref{sec:intro} \\
-$\gamma_t(T)$ & $\|T_{\sqrt t}\,\partial_Tf\|_2^2=\sum_{U\supseteq T}\mu(U)\,t^{|U\setminus T|}$ & Section~\ref{sec:intro} \\
+$\gamma_t(T)$ & the noisy generalized influence $\|T_{\sqrt t}\,\partial_Tf\|_2^2=\sum_{U\supseteq T}\mu(U)\,t^{|U\setminus T|}$ & Section~\ref{sec:intro} \\
 $\gamma(T)$ & $\gamma_1(T)=\|\partial_Tf\|_2^2$, the generalized influence of $T$ & Section~\ref{sec:intro} \\
 $A$, $B$ & $\sum_S\mu(S)\log_2(1/\gamma(S))$ and $\sum_S\mu(S)\log_2(\gamma(S)/\mu(S))$, so that $H(f)=A+B$ & Section~\ref{sec:intro} \\
 $A_t$ & $\sum_S\mu(S)\log_2(1/\gamma_t(S))$ & Section~\ref{sec:intro} \\
 $m_t(T)$ & the mean of $|U\setminus T|$ when $U\supseteq T$ is drawn with probability proportional to $\mu(U)t^{|U\setminus T|}$ & Section~\ref{sec:intro} \\
 $M_t(f)$, $M(f)$ & $\sum_S\mu(S)\,m_t(S)$, and $M_1(f)$ & Section~\ref{sec:intro} \\
-$Q$ & the law $Q(T,i)=\mu(T\cup\{i\})/I(f)$ on pairs $(T,i)$ with $i\notin T$ & Section~\ref{sec:intro} \\
+$Q$ & the law $Q(T,i)=\mu(T\cup\{i\})/I(f)$, for nonconstant $f$, on pairs $(T,i)$ with $i\notin T$ & Section~\ref{sec:intro} \\
 $L(f)$ & the log-loss $\E_Q\log_2\bigl((\mu(T)+\mu(T\cup\{i\}))/\mu(T\cup\{i\})\bigr)$ of predicting that $i\in U$ from $U\setminus\{i\}$ & Section~\ref{sec:intro} \\
+$s$ & the integration variable in part (c) & Section~\ref{sec:intro} \\
 $\nu_t(T)$ & $(1-t)^{|T|}\gamma_t(T)$, the law of the set that keeps each element of $U$ with probability $1-t$ & Section~\ref{sec:thin} \\
-$s$ & the integration variable in part (c) & Theorem~\ref{thm:main} \\
 $\lambda$ & the noise level at which part (b) is applied in the proof of part (c) & Section~\ref{sec:tilt} \\
 $a$, $b$ & $\mu(T)$ and $\mu(T\cup\{i\})$ for a fixed $i$ and $T\not\ni i$, in the proof of part (d) & Section~\ref{sec:pred} \\
 $p_i(T)$, $K_p$ & a predictor, a nonnegative function on pairs, and its normalized total $\frac1{I(f)}\sum_i\sum_{T\not\ni i}(\mu(T)+\mu(T\cup\{i\}))\,p_i(T)$ & Section~\ref{sec:pred} \\
 $R(T,i)$ & the probability law $(\mu(T)+\mu(T\cup\{i\}))\,p_i(T)/(K_pI(f))$ on pairs, in the proof & Proposition~\ref{prop:var} \\
-$Y$, $\chi_Yf$ & a set of coordinates, and the shifted function; then $\{i:\Inf_i(f)>\tfrac12\}$ & Remark~\ref{rem:centre} \\
+$Y$, $\chi_Yf$ & a set of coordinates and the function $\chi_Y f$; in Remark~\ref{rem:centre}, $Y=\{i:\Inf_i(f)>\tfrac12\}$ & Remark~\ref{rem:centre} \\
 $S\triangle Y$ & the symmetric difference $(S\setminus Y)\cup(Y\setminus S)$ & Remark~\ref{rem:centre} \\
-$D_if$ & $\tfrac12(f_{i\to1}-f_{i\to-1})$, with values in $\{-1,0,1\}$ & Remark~\ref{rem:centre} \\
 $W_1(f)$ & the level-one weight $\sum_i\hat f(\{i\})^2$ & Remark~\ref{rem:centre} \\
 \bottomrule
 \end{longtable}
@@ -329,6 +344,8 @@ Fourier-entropy conjecture?, Geom. Funct. Anal. 30 (2020), 1097--1138.
 \bibitem{OD14} R.~O'Donnell, \emph{Analysis of Boolean Functions}, Cambridge University Press, 2014.
 \bibitem{OT13} R.~O'Donnell, L.-Y.~Tan, A composition theorem for the Fourier entropy-influence conjecture, ICALP 2013,
 Lecture Notes in Comput. Sci. 7965, 780--791, doi:10.1007/978-3-642-39206-1\_66.
+\bibitem{Pot26} V.~N.~Potapov, On the Fourier entropy-influence conjecture for Boolean plateaued functions,
+arXiv:2609.21563, 2026.
 \bibitem{OWZ11} R.~O'Donnell, J.~Wright, Y.~Zhou, The Fourier entropy-influence conjecture for certain classes of
 Boolean functions, ICALP 2011, Lecture Notes in Comput. Sci. 6755, 330--341.
 \bibitem{Shm1} Y.~Shmalo, The one-coordinate step in the Fourier entropy-influence conjecture,

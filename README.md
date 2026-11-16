@@ -6,7 +6,7 @@ This repository contains a short paper on the Fourier entropy-influence (FEI) co
 together with the script behind every numerical value in it.
 
 Paper: [main.pdf](main.pdf) (source [main.tex](main.tex)).
-Zenodo: [doi:10.5281/zenodo.24126596](https://doi.org/10.5281/zenodo.24126596).
+Zenodo: [doi:10.5281/zenodo.24125392](https://doi.org/10.5281/zenodo.24125392) (all versions).
 
 ## Summary
 
@@ -18,13 +18,14 @@ B = E log2(gamma(S)/mu(S)). The paper shows:
   if B <= C I.
 * (b) For fixed t < 1, H lies between A_t and A_t + I log2(1/(1-t)), where A_t uses the noisy generalized influences
   ||T_sqrt(t) d_T f||^2. So FEI holds if and only if A_t <= C I.
-* (c) B is an integral over the noise parameter of the expected number of elements a noise-tilted posterior adds to
-  the spectral sample; only t in [1/2, 1] matters, and H <= 4I - 2Var + 2M(f) for every f.
-* (d) FEI holds if and only if a uniformly chosen element of the size-biased spectral sample can be predicted from the
-  others at a cost of O(1) bits, and this loss has a variational form over predictors.
+* (c) B is an integral over the noise parameter of the mean number of elements that a draw from mu, conditioned on
+  thinning to a given set, adds to that set; noise levels in [1/2, 1] suffice, and H <= 4I - 2Var + 2M(f) for every f.
+* (d) The sum of the erasure entropies lies between I L and I L + I/ln 2, where L is the log-loss of predicting a
+  uniform element of the size-biased spectral sample from the others. With the earlier one-coordinate paper, FEI holds
+  if and only if L is bounded; L has a variational form over predictors.
 
-The equivalences are for the class of all Boolean functions; for a function with odd Fourier support, such as
-majority, the erasure entropies vanish while H/I does not.
+Forms (a)-(c) bound H above and below for each function. Form (d) does not: for a function with odd Fourier support,
+such as majority, the erasure entropies vanish while H/I does not.
 
 ## Code
 
